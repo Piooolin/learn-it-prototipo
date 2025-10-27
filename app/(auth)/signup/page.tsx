@@ -1,14 +1,21 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 
 export default function SignupPage() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const roleFromUrl = searchParams.get('role') || 'student'
+  const [roleFromUrl, setRoleFromUrl] = useState('student')
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search)
+    const roleParam = urlParams.get('role')
+    if (roleParam === 'tutor' || roleParam === 'student') {
+      setRoleFromUrl(roleParam)
+      setRole(roleParam)
+    }
+  }, [])
+
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
