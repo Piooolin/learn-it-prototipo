@@ -120,15 +120,15 @@ export default function MySessionsPage() {
   function getStatusColor(status: string) {
     switch (status) {
       case 'confirmed':
-        return 'bg-green-100 text-green-800'
+        return { backgroundColor: '#d1fae5', color: '#065f46' }
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800'
+        return { backgroundColor: '#fef3c7', color: '#92400e' }
       case 'completed':
-        return 'bg-blue-100 text-blue-800'
+        return { backgroundColor: '#dbeafe', color: '#1e40af' }
       case 'cancelled':
-        return 'bg-red-100 text-red-800'
+        return { backgroundColor: '#fee2e2', color: '#991b1b' }
       default:
-        return 'bg-gray-100 text-gray-800'
+        return { backgroundColor: '#f3f4f6', color: '#374151' }
     }
   }
 
@@ -149,8 +149,11 @@ export default function MySessionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1c2444 0%, #0d1117 100%)' }}>
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#ec6c0c' }}></div>
+          <p className="text-white font-medium">Cargando sesiones...</p>
+        </div>
       </div>
     )
   }
@@ -158,28 +161,31 @@ export default function MySessionsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 shadow-lg backdrop-blur-sm" style={{ backgroundColor: 'rgba(28, 36, 68, 0.95)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
-                LI
-              </div>
-              <span className="font-bold text-xl text-gray-900">Learn It</span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <img 
+                src="/images/logo.png" 
+                alt="Learn It Logo"
+                className="w-12 h-12 object-contain bg-white p-1.5 rounded-lg shadow-sm group-hover:shadow-md transition-shadow"
+              />
+              <span className="text-white font-bold text-xl tracking-tight">Learn It</span>
             </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               <Link
                 href="/tutors"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+                className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
               >
                 Buscar tutores
               </Link>
               {user && (
                 <>
-                  <span className="text-sm text-gray-600">{user.email}</span>
+                  <span className="text-sm text-gray-400">{user.email}</span>
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:bg-red-600"
+                    style={{ backgroundColor: '#f04828' }}
                   >
                     Cerrar sesión
                   </button>
@@ -192,110 +198,111 @@ export default function MySessionsPage() {
 
       {/* Contenido */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="mb-10">
+          <h1 className="text-4xl font-bold mb-3" style={{ color: '#1c2444' }}>
             Mis Sesiones
           </h1>
-          <p className="text-gray-600">
+          <p className="text-xl text-gray-600">
             Todas tus sesiones agendadas con tutores
           </p>
         </div>
 
         {sessions.length === 0 ? (
-          <div className="bg-white rounded-lg shadow p-12 text-center">
-            <Calendar className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h2 className="text-xl font-bold text-gray-900 mb-2">
+          <div className="bg-white rounded-2xl shadow-xl p-12 text-center border border-gray-100">
+            <Calendar className="w-20 h-20 mx-auto mb-6" style={{ color: '#ec6c0c' }} />
+            <h2 className="text-2xl font-bold mb-3" style={{ color: '#1c2444' }}>
               No tienes sesiones agendadas
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-8 text-lg">
               Busca un tutor y agenda tu primera sesión
             </p>
             <Link
               href="/tutors"
-              className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block px-8 py-3 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+              style={{ backgroundColor: '#ec6c0c' }}
             >
               Buscar tutores
             </Link>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-6">
             {sessions.map((session) => (
               <div
                 key={session.id}
-                className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6"
+                className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all p-6 border border-gray-100"
               >
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex flex-col md:flex-row items-start justify-between mb-6 gap-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-xl flex-shrink-0 shadow-lg" style={{ background: 'linear-gradient(135deg, #ec6c0c 0%, #f04828 100%)' }}>
                       {session.tutors.profiles.full_name.charAt(0)}
                     </div>
                     <div>
-                      <h3 className="font-bold text-lg text-gray-900">
+                      <h3 className="font-bold text-xl mb-2" style={{ color: '#1c2444' }}>
                         {session.subject}
                       </h3>
-                      <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
                         <User className="w-4 h-4" />
-                        <span>{session.tutors.profiles.full_name}</span>
+                        <span className="font-medium">{session.tutors.profiles.full_name}</span>
                         <span className="text-gray-400">•</span>
                         <span>{session.tutors.profiles.university}</span>
                       </div>
                     </div>
                   </div>
                   <span
-                    className={`px-3 py-1 text-xs font-medium rounded-full ${getStatusColor(
-                      session.status
-                    )}`}
+                    className="px-4 py-2 text-sm font-bold rounded-xl shadow-sm whitespace-nowrap"
+                    style={getStatusColor(session.status)}
                   >
                     {getStatusText(session.status)}
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Calendar className="w-4 h-4" />
-                    <span>{formatDate(session.scheduled_at)}</span>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-5">
+                  <div className="flex items-center gap-3 text-sm text-gray-700 bg-gray-50 rounded-xl p-3">
+                    <Calendar className="w-5 h-5" style={{ color: '#ec6c0c' }} />
+                    <span className="font-medium">{formatDate(session.scheduled_at)}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Clock className="w-4 h-4" />
-                    <span>
+                  <div className="flex items-center gap-3 text-sm text-gray-700 bg-gray-50 rounded-xl p-3">
+                    <Clock className="w-5 h-5" style={{ color: '#ec6c0c' }} />
+                    <span className="font-medium">
                       {formatTime(session.scheduled_at)} ({session.duration_minutes} min)
                     </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <DollarSign className="w-4 h-4" />
-                    <span className="font-bold">${session.total_price}</span>
+                  <div className="flex items-center gap-3 text-sm bg-gray-50 rounded-xl p-3">
+                    <DollarSign className="w-5 h-5" style={{ color: '#ec6c0c' }} />
+                    <span className="font-bold" style={{ color: '#1c2444' }}>S/ {session.total_price}</span>
                   </div>
                 </div>
 
                 {session.notes && (
-                  <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                    <div className="flex items-start gap-2">
-                      <MessageSquare className="w-4 h-4 text-gray-600 mt-0.5 flex-shrink-0" />
+                  <div className="rounded-xl p-4 mb-5 border-2" style={{ backgroundColor: '#fef3e9', borderColor: '#ec6c0c' }}>
+                    <div className="flex items-start gap-3">
+                      <MessageSquare className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: '#ec6c0c' }} />
                       <div>
-                        <p className="text-sm font-medium text-gray-700 mb-1">
+                        <p className="text-sm font-bold mb-2" style={{ color: '#1c2444' }}>
                           Notas:
                         </p>
-                        <p className="text-sm text-gray-600">{session.notes}</p>
+                        <p className="text-sm text-gray-700 leading-relaxed">{session.notes}</p>
                       </div>
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center justify-between pt-4 border-t">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-5 border-t-2 border-gray-100">
                   <Link
                     href={`/tutors/${session.tutors.id}`}
-                    className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                    className="text-sm font-bold hover:underline"
+                    style={{ color: '#ec6c0c' }}
                   >
-                    Ver perfil del tutor
+                    Ver perfil del tutor →
                   </Link>
                   {session.status === 'pending' && (
                     <button
-                      className="px-4 py-2 text-sm text-red-600 hover:text-red-700 font-medium"
+                      className="px-5 py-2 text-sm text-white font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
+                      style={{ backgroundColor: '#f04828' }}
                       onClick={() => {
                         if (
                           confirm('¿Estás seguro de que quieres cancelar esta sesión?')
                         ) {
-                          // Aquí iría la lógica para cancelar
                           alert('Funcionalidad de cancelar próximamente')
                         }
                       }}

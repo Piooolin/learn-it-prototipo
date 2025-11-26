@@ -84,7 +84,7 @@ export default function SignupPage() {
         await supabase.auth.signInWithPassword({ email, password })
 
         // Mostrar mensaje de éxito
-        alert('¡Cuenta creada exitosamente! ✅')
+        alert('¡Cuenta creada exitosamente!')
         
         // Ir a la landing page
         window.location.href = '/tutors'
@@ -97,55 +97,60 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        {/* Logo y título */}
-        <div>
-          <Link href="/" className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              LI
-            </div>
-            <span className="text-2xl font-bold text-gray-900">Learn It</span>
-          </Link>
-          <h2 className="text-center text-3xl font-bold text-gray-900">
-            Crear una cuenta
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            ¿Ya tienes cuenta?{' '}
-            <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500">
-              Inicia sesión
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, #1c2444 0%, #0d1117 100%)' }}>
+      <div className="max-w-md w-full">
+        {/* Card principal */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          {/* Logo y título */}
+          <div className="mb-8">
+            <Link href="/" className="flex items-center justify-center gap-3 mb-6">
+              <img 
+                src="/images/logo.png" 
+                alt="Learn It Logo"
+                className="w-12 h-12 object-contain bg-white p-1 rounded-lg shadow-sm"
+              />
+              <span className="text-2xl font-bold" style={{ color: '#1c2444' }}>Learn It</span>
             </Link>
-          </p>
-        </div>
+            <h2 className="text-center text-3xl font-bold mb-2" style={{ color: '#1c2444' }}>
+              Crear una cuenta
+            </h2>
+            <p className="text-center text-gray-600">
+              ¿Ya tienes cuenta?{' '}
+              <Link href="/login" className="font-semibold hover:underline" style={{ color: '#ec6c0c' }}>
+                Inicia sesión
+              </Link>
+            </p>
+          </div>
 
-        {/* Formulario */}
-        <form className="mt-8 space-y-6" onSubmit={handleSignup}>
-          <div className="rounded-md shadow-sm space-y-4">
+          {/* Formulario */}
+          <form className="space-y-5" onSubmit={handleSignup}>
             {/* Selector de rol */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold mb-3" style={{ color: '#1c2444' }}>
                 Registro como:
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setRole('student')}
-                  className={`py-3 px-4 rounded-lg font-medium transition-all ${
+                  className={`py-3 px-4 rounded-xl font-semibold transition-all ${
                     role === 'student'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-500'
+                      ? 'text-white shadow-lg scale-105'
+                      : 'bg-gray-100 hover:bg-gray-200'
                   }`}
+                  style={role === 'student' ? { backgroundColor: '#ec6c0c' } : { color: '#374151' }}
                 >
                   Estudiante
                 </button>
                 <button
                   type="button"
                   onClick={() => setRole('tutor')}
-                  className={`py-3 px-4 rounded-lg font-medium transition-all ${
+                  className={`py-3 px-4 rounded-xl font-semibold transition-all ${
                     role === 'tutor'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-500'
+                      ? 'text-white shadow-lg scale-105'
+                      : 'bg-gray-100 hover:bg-gray-200'
                   }`}
+                  style={role === 'tutor' ? { backgroundColor: '#ec6c0c' } : { color: '#374151' }}
                 >
                   Tutor
                 </button>
@@ -154,7 +159,7 @@ export default function SignupPage() {
 
             {/* Nombre completo */}
             <div>
-              <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="fullName" className="block text-sm font-semibold mb-2" style={{ color: '#1c2444' }}>
                 Nombre completo
               </label>
               <input
@@ -164,14 +169,17 @@ export default function SignupPage() {
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:border-2 transition-all"
+                style={{ color: '#1c2444' }}
+                onFocus={(e) => e.target.style.borderColor = '#ec6c0c'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 placeholder="Juan Pérez"
               />
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#1c2444' }}>
                 Correo electrónico
               </label>
               <input
@@ -181,14 +189,17 @@ export default function SignupPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:border-2 transition-all"
+                style={{ color: '#1c2444' }}
+                onFocus={(e) => e.target.style.borderColor = '#ec6c0c'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 placeholder="tu@ejemplo.com"
               />
             </div>
 
             {/* Contraseña */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: '#1c2444' }}>
                 Contraseña
               </label>
               <input
@@ -198,37 +209,41 @@ export default function SignupPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:border-2 transition-all"
+                style={{ color: '#1c2444' }}
+                onFocus={(e) => e.target.style.borderColor = '#ec6c0c'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 placeholder="Mínimo 6 caracteres"
               />
             </div>
-          </div>
 
-          {/* Mensaje de error */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
+            {/* Mensaje de error */}
+            {error && (
+              <div className="border-2 px-4 py-3 rounded-xl text-sm font-medium" style={{ backgroundColor: '#fee2e2', borderColor: '#f04828', color: '#991b1b' }}>
+                {error}
+              </div>
+            )}
+
+            {/* Botón de submit */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 px-4 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                style={{ backgroundColor: '#ec6c0c' }}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    Creando cuenta...
+                  </span>
+                ) : (
+                  'Crear cuenta'
+                )}
+              </button>
             </div>
-          )}
-
-          {/* Botón de submit */}
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Creando cuenta...
-                </span>
-              ) : (
-                'Crear cuenta'
-              )}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   )

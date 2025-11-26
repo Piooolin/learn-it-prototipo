@@ -91,8 +91,11 @@ export default function TutorProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #1c2444 0%, #0d1117 100%)' }}>
+        <div className="flex flex-col items-center gap-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: '#ec6c0c' }}></div>
+          <p className="text-white font-medium">Cargando perfil...</p>
+        </div>
       </div>
     )
   }
@@ -100,9 +103,9 @@ export default function TutorProfilePage() {
   if (!tutor) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <p className="text-gray-600 mb-4">Tutor no encontrado</p>
-          <Link href="/tutors" className="text-blue-600 hover:text-blue-700">
+        <div className="text-center bg-white p-8 rounded-2xl shadow-xl">
+          <p className="text-gray-600 mb-6 text-lg">Tutor no encontrado</p>
+          <Link href="/tutors" className="px-6 py-3 text-white rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl inline-block" style={{ backgroundColor: '#ec6c0c' }}>
             Volver a la lista
           </Link>
         </div>
@@ -113,44 +116,47 @@ export default function TutorProfilePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <nav className="sticky top-0 z-50 shadow-lg backdrop-blur-sm" style={{ backgroundColor: 'rgba(28, 36, 68, 0.95)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
-                LI
-              </div>
-              <span className="font-bold text-xl text-gray-900">Learn It</span>
+            <Link href="/" className="flex items-center gap-3 group">
+              <img 
+                src="/images/logo.png" 
+                alt="Learn It Logo"
+                className="w-12 h-12 object-contain bg-white p-1.5 rounded-lg shadow-sm group-hover:shadow-md transition-shadow"
+              />
+              <span className="text-white font-bold text-xl tracking-tight">Learn It</span>
             </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3">
               {user ? (
                 <>
                   <Link
                     href="/tutors"
-                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
                   >
                     Buscar tutores
                   </Link>
                   <Link
                     href="/my-sessions"
-                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all"
                   >
                     Mis sesiones
                   </Link>
-                  <span className="text-sm text-gray-600">{user.email}</span>
+                  <span className="text-sm text-gray-400">{user.email}</span>
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 text-sm font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:bg-red-600"
+                    style={{ backgroundColor: '#f04828' }}
                   >
                     Cerrar sesión
                   </button>
                 </>
               ) : (
                 <>
-                  <Link href="/login" className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                  <Link href="/login" className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all">
                     Iniciar sesión
                   </Link>
-                  <Link href="/signup" className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                  <Link href="/signup" className="px-5 py-2 text-white text-sm font-medium rounded-lg transition-all shadow-md hover:shadow-xl" style={{ backgroundColor: '#ec6c0c' }}>
                     Registrarse
                   </Link>
                 </>
@@ -165,20 +171,29 @@ export default function TutorProfilePage() {
         {/* Botón volver */}
         <Link
           href="/tutors"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-6"
+          className="inline-flex items-center gap-2 text-gray-600 hover:text-white px-4 py-2 rounded-lg transition-all mb-8 font-medium hover:shadow-lg"
+          style={{ backgroundColor: 'transparent' }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = '#ec6c0c'
+            e.currentTarget.style.color = 'white'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'transparent'
+            e.currentTarget.style.color = '#4b5563'
+          }}
         >
           <ArrowLeft className="w-4 h-4" />
           Volver a la lista
         </Link>
 
         {/* Header del perfil */}
-        <div className="bg-white rounded-lg shadow p-8 mb-6">
-          <div className="flex items-start gap-6 mb-6">
-            <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-3xl flex-shrink-0">
+        <div className="bg-white rounded-2xl shadow-xl p-8 mb-6 border border-gray-100">
+          <div className="flex flex-col lg:flex-row items-start gap-6 mb-6">
+            <div className="w-24 h-24 rounded-full flex items-center justify-center text-white font-bold text-3xl flex-shrink-0 shadow-xl" style={{ background: 'linear-gradient(135deg, #ec6c0c 0%, #f04828 100%)' }}>
               {tutor.profiles?.full_name.charAt(0) || '?'}
             </div>
             <div className="flex-1">
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl lg:text-4xl font-bold mb-2" style={{ color: '#1c2444' }}>
                 {tutor.profiles?.full_name || 'Sin nombre'}
               </h1>
               <p className="text-lg text-gray-600 mb-4">
@@ -186,26 +201,27 @@ export default function TutorProfilePage() {
               </p>
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-500 fill-current" />
-                  <span className="font-bold text-lg">{tutor.rating}</span>
+                  <Star className="w-6 h-6 fill-current" style={{ color: '#ec6c0c' }} />
+                  <span className="font-bold text-xl" style={{ color: '#1c2444' }}>{tutor.rating}</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-600">
                   <Clock className="w-5 h-5" />
-                  <span>{tutor.total_sessions} sesiones completadas</span>
+                  <span className="font-medium">{tutor.total_sessions} sesiones completadas</span>
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div className="flex items-center gap-1 justify-end mb-2">
-                <DollarSign className="w-6 h-6 text-gray-600" />
-                <span className="text-3xl font-bold text-gray-900">{tutor.hourly_rate}</span>
+            <div className="w-full lg:w-auto lg:text-right">
+              <div className="flex items-center gap-1 justify-center lg:justify-end mb-4">
+                <span className="text-gray-600">S/</span>
+                <span className="text-4xl font-bold" style={{ color: '#1c2444' }}>{tutor.hourly_rate}</span>
                 <span className="text-gray-600">/hora</span>
               </div>
               <button
                 onClick={handleBookSession}
-                className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="w-full lg:w-auto px-8 py-3 text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+                style={{ backgroundColor: '#ec6c0c' }}
               >
-                <Calendar className="w-4 h-4 inline mr-2" />
+                <Calendar className="w-5 h-5 inline mr-2" />
                 Agendar sesión
               </button>
             </div>
@@ -213,13 +229,14 @@ export default function TutorProfilePage() {
         </div>
 
         {/* Especialidades */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Especialidades</h2>
-          <div className="flex flex-wrap gap-2">
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border border-gray-100">
+          <h2 className="text-2xl font-bold mb-5" style={{ color: '#1c2444' }}>Especialidades</h2>
+          <div className="flex flex-wrap gap-3">
             {tutor.specializations.map((spec, index) => (
               <span
                 key={index}
-                className="px-4 py-2 bg-blue-50 text-blue-700 font-medium rounded-lg"
+                className="px-5 py-2 font-semibold rounded-xl shadow-sm"
+                style={{ backgroundColor: '#fef3e9', color: '#ec6c0c' }}
               >
                 {spec}
               </span>
@@ -228,20 +245,20 @@ export default function TutorProfilePage() {
         </div>
 
         {/* Descripción */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Acerca de mí</h2>
-          <p className="text-gray-700 leading-relaxed">{tutor.description}</p>
+        <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border border-gray-100">
+          <h2 className="text-2xl font-bold mb-5" style={{ color: '#1c2444' }}>Acerca de mí</h2>
+          <p className="text-gray-700 leading-relaxed text-lg">{tutor.description}</p>
         </div>
 
         {/* Idiomas */}
-        <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">
-            <Languages className="w-5 h-5 inline mr-2" />
+        <div className="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+          <h2 className="text-2xl font-bold mb-5" style={{ color: '#1c2444' }}>
+            <Languages className="w-6 h-6 inline mr-2" style={{ color: '#ec6c0c' }} />
             Idiomas
           </h2>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             {tutor.languages.map((lang, index) => (
-              <span key={index} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg">
+              <span key={index} className="px-5 py-2 bg-gray-100 text-gray-700 font-medium rounded-xl">
                 {lang}
               </span>
             ))}

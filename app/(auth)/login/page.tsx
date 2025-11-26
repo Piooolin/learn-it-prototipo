@@ -48,33 +48,36 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        {/* Logo y título */}
-        <div>
-          <Link href="/" className="flex items-center justify-center gap-2 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-              LI
-            </div>
-            <span className="text-2xl font-bold text-gray-900">Learn It</span>
-          </Link>
-          <h2 className="text-center text-3xl font-bold text-gray-900">
-            Iniciar sesión
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            ¿No tienes cuenta?{' '}
-            <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-              Regístrate gratis
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style={{ background: 'linear-gradient(135deg, #1c2444 0%, #0d1117 100%)' }}>
+      <div className="max-w-md w-full">
+        {/* Card principal */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          {/* Logo y título */}
+          <div className="mb-8">
+            <Link href="/" className="flex items-center justify-center gap-3 mb-6">
+              <img 
+                src="/images/logo.png" 
+                alt="Learn It Logo"
+                className="w-12 h-12 object-contain bg-white p-1 rounded-lg shadow-sm"
+              />
+              <span className="text-2xl font-bold" style={{ color: '#1c2444' }}>Learn It</span>
             </Link>
-          </p>
-        </div>
+            <h2 className="text-center text-3xl font-bold mb-2" style={{ color: '#1c2444' }}>
+              Iniciar sesión
+            </h2>
+            <p className="text-center text-gray-600">
+              ¿No tienes cuenta?{' '}
+              <Link href="/signup" className="font-semibold hover:underline" style={{ color: '#ec6c0c' }}>
+                Regístrate gratis
+              </Link>
+            </p>
+          </div>
 
-        {/* Formulario */}
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <div className="rounded-md shadow-sm space-y-4">
+          {/* Formulario */}
+          <form className="space-y-5" onSubmit={handleLogin}>
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="email" className="block text-sm font-semibold mb-2" style={{ color: '#1c2444' }}>
                 Correo electrónico
               </label>
               <input
@@ -84,14 +87,17 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:border-2 transition-all"
+                style={{ color: '#1c2444' }}
+                onFocus={(e) => e.target.style.borderColor = '#ec6c0c'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 placeholder="tu@ejemplo.com"
               />
             </div>
 
             {/* Contraseña */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="password" className="block text-sm font-semibold mb-2" style={{ color: '#1c2444' }}>
                 Contraseña
               </label>
               <input
@@ -101,47 +107,51 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl placeholder-gray-400 focus:outline-none focus:border-2 transition-all"
+                style={{ color: '#1c2444' }}
+                onFocus={(e) => e.target.style.borderColor = '#ec6c0c'}
+                onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                 placeholder="Tu contraseña"
               />
             </div>
-          </div>
 
-          {/* Mensaje de error */}
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
+            {/* Mensaje de error */}
+            {error && (
+              <div className="border-2 px-4 py-3 rounded-xl text-sm font-medium" style={{ backgroundColor: '#fee2e2', borderColor: '#f04828', color: '#991b1b' }}>
+                {error}
+              </div>
+            )}
+
+            {/* Botón de submit */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-3 px-4 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105"
+                style={{ backgroundColor: '#ec6c0c' }}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    Iniciando sesión...
+                  </span>
+                ) : (
+                  'Iniciar sesión'
+                )}
+              </button>
             </div>
-          )}
 
-          {/* Botón de submit */}
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {loading ? (
-                <span className="flex items-center gap-2">
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  Iniciando sesión...
-                </span>
-              ) : (
-                'Iniciar sesión'
-              )}
-            </button>
-          </div>
-
-          {/* Link a inicio */}
-          <div className="text-center">
-            <Link
-              href="/"
-              className="text-sm text-gray-600 hover:text-gray-900"
-            >
-              ← Volver al inicio
-            </Link>
-          </div>
-        </form>
+            {/* Link a inicio */}
+            <div className="text-center pt-2">
+              <Link
+                href="/"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                ← Volver al inicio
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   )
